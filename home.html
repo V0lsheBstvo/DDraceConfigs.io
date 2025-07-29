@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDraceConfigs.io - Home</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--ty-color-warning), #a38cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: var(--tcolor-dark);
+            line-height: 1.6;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .feature-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-card h2 {
+            margin-bottom: 15px;
+            color: var(--ty-color-warning);
+        }
+        .feature-card p {
+            color: var(--text-color-light);
+            margin-bottom: 20px;
+        }
+        .feature-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--ty-color-warning);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .feature-button:hover {
+            background-color: #5a6fdb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>DDraceConfigs.io</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.html" class="active">Home</a></li> <!-- B budushem Hado budeT zaMeHiT' Ha index.html -->
+                <li><a href="configs.html">Configurations</a></li>
+                <li><a href="binds.html">Binds</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>DDraceConfigs.io - Your Ultimate DDNet Resource</h1>
+            <p>Welcome to DDraceConfigs.io, the largest community-driven platform for sharing and discovering the best configurations and binds for DDNet games. Optimize your gameplay with settings from top players and share your own setups with the community.</p>
+            
+            <div class="features">
+                <div class="feature-card" onclick="location.href='configs.html'">
+                    <h2>Configurations</h2>
+                    <p>Optimize your gameplay with professional configurations for graphics, controls, and performance.</p>
+                    <a href="configs.html" class="feature-button">Explore Settings</a>
+                </div>
+                
+                <div class="feature-card" onclick="location.href='binds.html'">
+                    <h2>Binds</h2>
+                    <p>Discover efficient key bind setups from top players to enhance your movement and techniques.</p>
+                    <a href="binds.html" class="feature-button">Browse Binds</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 DDraceConfigs.io. Designed by Klow.</p>
+    </footer>
+
+    <script>
+        // Добавляем класс active к текущей странице
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

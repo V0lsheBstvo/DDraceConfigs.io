@@ -1,0 +1,372 @@
+:root {
+  --ty-color-warning: #6b81ff;
+  --ty-color-error: #e74c3c;
+  --ty-color-success: #07bc0c;
+  --ty-color-info: #3498db;
+
+  --primary-color: #11141c;
+  --secondary-color: #4a5cb3;
+  --background-color: #030011;
+  --card-background: #171B27;
+  --footer-background: #010007;
+
+  --text-color-light: #ffffff;
+  --text-color-dark: #ffffff;
+  --tcolor-dark: #8368ff;
+
+  --border-radius: 10px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+*,
+:after,
+:before {
+  border: 0;
+  box-sizing: border-box;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, var(--primary-color), var(--footer-background));
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Обеспечивает, что футер будет внизу страницы */
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  /* Анимация появления страницы */
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+header {
+  color: var(--text-color-light);
+  padding: 20px 40px;
+  /* Увеличенные отступы */
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  /* Равномерное распределение */
+  align-items: center;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /* Тень для глубины */
+  transition: background 0.3s ease;
+  /* Плавный переход фона */
+
+  /* Добавление эффекта размытия */
+  backdrop-filter: blur(1px);
+  /* Легкий эффект размытия */
+}
+
+.logo {
+  margin-bottom: 15px;
+}
+
+.logo h1 {
+  font-size: 2em;
+  /* Увеличенный размер шрифта */
+  font-weight: bold;
+  letter-spacing: 1px;
+  /* Пробел между буквами */
+  transition: transform 0.3s ease;
+  /* Плавный переход при наведении */
+}
+
+.logo h1:hover {
+  transform: scale(1.1);
+  /* Увеличение логотипа при наведении */
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  /* Горизонтальное расположение */
+  gap: 30px;
+  /* Промежуток между элементами */
+}
+
+nav ul li {
+  position: relative;
+  /* Для псевдоэлементов */
+}
+
+nav ul li a {
+  color: var(--text-color-light);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  /* Внутреннее поле */
+  border-radius: 5px;
+  /* Скругление углов */
+  transition: background 0.3s ease, color 0.3s ease;
+  /* Плавный переход */
+}
+
+nav ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  /* Полупрозрачный фон при наведении */
+  color: var(--ty-color-warning);
+  /* Изменение цвета текста при наведении */
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  /* Положение под ссылкой */
+  width: 0;
+  height: 2px;
+  background: var(--ty-color-warning);
+  /* Цвет подчеркивания */
+  transition: width 0.3s ease, left 0.3s ease;
+  /* Плавный переход */
+}
+
+nav ul li:hover a::after {
+  width: 100%;
+  /* Полное подчеркивание при наведении */
+  left: 0;
+  /* Сдвиг влево */
+}
+
+
+
+main {
+  padding: 100px 20px 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.config-author {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  justify-content: center;
+}
+
+.list-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.config-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.config-card {
+  border-radius: 8px;
+  background-color: rgb(23, 27, 39);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s, transform 0.3s;
+  /* Плавные переходы для фона и трансформации */
+  margin: 10px 0;
+  box-shadow: var(--box-shadow);
+  opacity: 0;
+  /* Начальное состояние для анимации */
+  transform: translateY(20px);
+  /* Начальная позиция для анимации */
+  animation: slideIn 0.5s forwards;
+  /* Анимация появления карточки */
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    /* Конечная позиция */
+  }
+}
+
+.config-card:hover {
+  background-color: rgb(34, 38, 50);
+  transform: translateY(-3px);
+}
+
+.avatar {
+  margin-right: 15px;
+}
+
+.avatar img {
+  width: 100px;
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+.config-details {
+  flex-grow: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.config-details a {
+  display: flex;
+  align-items: center;
+  color: var(--text-color-light);
+  text-decoration: none;
+  transition: color 0.3s;
+  /* Плавный переход цвета */
+}
+
+.config-details h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.verification-icon {
+  margin-left: 5px;
+}
+
+.config-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.config-meta-div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #696969;
+}
+
+.config-description {
+  color: var(--tcolor-dark);
+  margin: 10px 0;
+  flex-grow: 1;
+}
+
+.config-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.config-button {
+  border-radius: 6px;
+  background: rgb(65, 126, 76);
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 48px;
+  height: fit-content;
+  padding: 10px 24px;
+  transition: background 0.3s, transform 0.2s;
+  /* Плавные переходы для фона и трансформации */
+}
+
+.config-button:hover {
+  background: rgb(85, 150, 90);
+  transform: scale(1.05);
+  /* Увеличение при наведении */
+}
+
+footer {
+  text-align: center;
+  padding: 15px 0;
+  background: var(--footer-background);
+  color: var(--text-color-light);
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+  /* Плавный переход фона футера */
+}
+
+/* Стили для фильтров и поиска */
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.search-box {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--ty-color-warning);
+  background-color: var(--card-background);
+  color: var(--text-color-light);
+  transition: background-color 0.3s;
+  /* Плавный переход фона */
+}
+
+.search-box::placeholder {
+  color: #aaa;
+}
+
+.search-box:focus {
+  background-color: rgb(34, 38, 50);
+  /* Цвет при фокусе */
+}
+
+.tag {
+  display: inline-block;
+  padding: 8px 15px;
+  margin: 5px;
+  background-color: var(--ty-color-warning);
+  color: var(--text-color-dark);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  /* Плавные переходы для фона и трансформации */
+}
+
+.tag:hover {
+  background-color: #5a6fdb;
+  transform: scale(1.05);
+  /* Увеличение при наведении */
+}
+
+.tag.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Добавьте другие стили для вашего сайта здесь */
+
+@media (max-width: 768px) {
+  .config-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,525 @@
+:root {
+    --ty-color-warning: #6b81ff;
+    --ty-color-success: #07bc0c;
+    --ty-color-info: #3498db;
+
+    --primary-color: #11141c;
+    --secondary-color: #4a5cb3;
+    --background-color: #030011;
+    --card-background: #171B27;
+    --footer-background: #010007;
+
+    --text-color-light: #ffffff;
+    --text-color-dark: #ffffff;
+    --tcolor-dark: #8368ff;
+
+    --border-radius: 10px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+*,
+:after,
+:before {
+    border: 0;
+    box-sizing: border-box;
+    color: var(--text-color-light);
+    /* Установим цвет текста по умолчанию */
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, var(--primary-color), var(--footer-background));
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    /* Анимация появления страницы */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+header {
+    color: var(--text-color-light);
+    padding: 20px 40px;
+    /* Увеличенные отступы */
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    /* Равномерное распределение */
+    align-items: center;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /* Тень для глубины */
+    transition: background 0.3s ease;
+    /* Плавный переход фона */
+
+    /* Добавление эффекта размытия */
+    backdrop-filter: blur(1px);
+    /* Легкий эффект размытия */
+}
+
+.logo {
+    margin-bottom: 15px;
+}
+
+.logo h1 {
+    font-size: 2em;
+    /* Увеличенный размер шрифта */
+    font-weight: bold;
+    letter-spacing: 1px;
+    /* Пробел между буквами */
+    transition: transform 0.3s ease;
+    /* Плавный переход при наведении */
+}
+
+.logo h1:hover {
+    transform: scale(1.1);
+    /* Увеличение логотипа при наведении */
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    /* Горизонтальное расположение */
+    gap: 30px;
+    /* Промежуток между элементами */
+}
+
+nav ul li {
+    position: relative;
+    /* Для псевдоэлементов */
+}
+
+nav ul li a {
+    color: var(--text-color-light);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    /* Внутреннее поле */
+    border-radius: 5px;
+    /* Скругление углов */
+    transition: background 0.3s ease, color 0.3s ease;
+    /* Плавный переход */
+}
+
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    /* Полупрозрачный фон при наведении */
+    color: var(--ty-color-warning);
+    /* Изменение цвета текста при наведении */
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    /* Положение под ссылкой */
+    width: 0;
+    height: 2px;
+    background: var(--ty-color-warning);
+    /* Цвет подчеркивания */
+    transition: width 0.3s ease, left 0.3s ease;
+    /* Плавный переход */
+}
+
+nav ul li:hover a::after {
+    width: 100%;
+    /* Полное подчеркивание при наведении */
+    left: 0;
+    /* Сдвиг влево */
+}
+
+main {
+    padding: 100px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#profile-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: var(--border-radius);
+}
+
+.main-config {
+    display: grid;
+    grid-template-columns: 348px 1fr;
+    gap: 24px;
+    border-radius: var(--border-radius);
+}
+
+.config-section {
+    align-self: flex-start;
+}
+
+.config-item {
+    border-radius: 8px;
+    background: var(--card-background);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    opacity: 0;
+    /* Начальное состояние для анимации */
+    animation: fadeInUp 0.5s forwards;
+    /* Анимация появления элемента */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.config-details {
+    opacity: 0;
+    /* Начальное состояние для анимации */
+    animation: fadeIn 0.5s forwards;
+    /* Анимация появления элемента */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        /* Начальная позиция */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        /* Конечная позиция */
+    }
+}
+
+.config-download,
+.unique-binds,
+.crosshair-section {
+    margin-bottom: 20px;
+    align-self: flex-start;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    transition: opacity 0.3s;
+    opacity: 1;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.info-section,
+.mouse-settings {
+    margin-bottom: 20px;
+    align-self: flex-start;
+    padding: 16px;
+    display: grid;
+    gap: 16px;
+    transition: opacity 0.3s;
+    opacity: 1;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.download-button {
+    background: var(--ty-color-success);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 1em;
+}
+
+.download-button:hover {
+    background: rgb(85, 150, 90);
+    transform: scale(1.05);
+}
+
+.update-info {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-light);
+    font-size: 0.9em;
+}
+
+.update-info img {
+    margin-right: 8px;
+}
+
+.unique-binds {
+    margin: 20px 0;
+}
+
+.bind-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 12px;
+    margin: 5px 0;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.2s;
+}
+
+.bind-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.bind-name {
+    color: var(--text-color-light);
+}
+
+.bind-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.bind-buttons button {
+    background: var(--ty-color-info);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.bind-buttons button:hover {
+    background: rgb(41, 128, 185);
+    transform: scale(1.05);
+}
+
+.info-section pre,
+.mouse-settings pre,
+.crosshair-section pre {
+    color: var(--text-color-dark);
+    /* Используем темный цвет текста для читаемости */
+    white-space: pre-wrap;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--card-background);
+    box-shadow: var(--box-shadow);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: 'Roboto';
+}
+
+.mouse-settings {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.mouse-settings h6 {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-color-light);
+    margin-bottom: 12px;
+}
+
+.ms-set {
+    display: flex;
+    flex-direction: column;
+}
+
+.mouse-setting {
+    display: flex;
+    justify-content: space-between;
+    height: 56px;
+    border-bottom: 1px solid rgb(27, 36, 49);
+    padding: 0 10px;
+    align-items: center;
+}
+
+.setting-label {
+    color: var(--text-color-light);
+}
+
+.setting-value {
+    color: var(--text-color-dark);
+}
+
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background: var(--footer-background);
+    color: var(--text-color-light);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.author-info {
+    min-width: 900px;
+    display: flex;
+    align-items: center;
+    background: var(--card-background);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    animation: slideIn 0.5s forwards;
+    /* Анимация появления блока автора */
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.author-info .avatar {
+    margin-right: 16px;
+}
+
+.author-info .avatar img {
+    width: 80px;
+    /* Вы можете изменить размер по вашему усмотрению */
+    height: auto;
+    border-radius: 50%;
+    /* Круглая аватарка */
+}
+
+.author-info .author-details h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.author-info .config-author {
+    color: var(--text-color-dark);
+    font-size: 0.9em;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 2px;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .config-item,
+    .bind-item,
+    .info-section,
+    .crosshair-section,
+    .mouse-settings {
+        margin: 10px 0;
+    }
+
+    #profile-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Медиа секция */
+.media-section {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--box-shadow);
+    animation: fadeInUp 0.7s forwards;
+}
+
+.media-section h3 {
+    color: var(--text-color-light);
+    margin-bottom: 16px;
+    font-size: 1.4em;
+    padding-bottom: 10px;
+}
+
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.media-item {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+    transition: transform 0.3s ease;
+}
+
+.media-item:hover {
+    transform: scale(1.03);
+}
+
+.media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-item.video {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
+    height: 0;
+}
+
+.media-item.video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .media-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .media-item {
+        height: 250px;
+    }
+}
