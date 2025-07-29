@@ -5,7 +5,7 @@ const configs = [
         date: "04.01.2025",
         description: "This configuration is tailored for DDrace enthusiasts.",
         tags: ["DDrace"],
-        link: "CfgByFAIRUS.html",
+        link: "cfgbyfairus.html",
         image: "thumbnails/1.jpg"
     },
     {
@@ -14,7 +14,7 @@ const configs = [
         date: "04.01.2025",
         description: "Designed for KoG gameplay, this config enhances your speed and agility.",
         tags: ["KoG"],
-        link: "CfgByFAIRUS.html",
+        link: "cfgbyfairus.html",
         image: "thumbnails/2.jpg"
     },
     {
@@ -23,7 +23,7 @@ const configs = [
         date: "04.01.2025",
         description: "This configuration is optimized for block gameplay, ensuring smooth performance and minimal lag.",
         tags: ["Block"],
-        link: "CfgByFAIRUS.html",
+        link: "cfgbyfairus.html",
         image: "thumbnails/3.jpg"
     },
     {
@@ -32,7 +32,7 @@ const configs = [
         date: "04.01.2025",
         description: "This configuration is tailored for DDrace enthusiasts.",
         tags: ["DDrace"],
-        link: "CfgByFAIRUS.html",
+        link: "cfgbyfairus.html",
         image: "thumbnails/4.jpg"
     }
     // Add more configurations as needed
