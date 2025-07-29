@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Код доступа</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle, 
+  rgba(106, 17, 203, 1) 0%, 
+  rgba(37, 117, 252, 1) 20%, 
+  rgba(80, 184, 231, 1) 40%, 
+  rgba(129, 236, 255, 1) 60%, 
+  rgba(255, 255, 255, 1) 80%, 
+  rgba(255, 255, 255, 1) 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .code-display {
+            font-size: 2.5rem;
+            letter-spacing: 10px;
+            margin: 20px 0 30px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #222;
+        }
+        
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .btn {
+            background: #4a69bd;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 18px 0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: #3c5aa6;
+            transform: translateY(-3px);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn.special {
+            background: #e74c3c;
+        }
+        
+        .btn.special:hover {
+            background: #c0392b;
+        }
+        
+        .btn.enter {
+            background: #27ae60;
+        }
+        
+        .btn.enter:hover {
+            background: #219653;
+        }
+        
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            min-height: 60px;
+            font-size: 1.1rem;
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 10px;
+            transition: all 0.3s;
+        }
+        
+        .dot {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .timer {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Введите код доступа</h1>
+        <div class="code-display" id="codeDisplay">
+            <span class="dot hidden"></span>
+            <span class="dot hidden"></span>
+            <span class="dot hidden"></span>
+            <span class="dot hidden"></span>
+        </div>
+        
+        <div class="keyboard">
+            <button class="btn" data-key="1">1</button>
+            <button class="btn" data-key="2">2</button>
+            <button class="btn" data-key="3">3</button>
+            <button class="btn" data-key="4">4</button>
+            <button class="btn" data-key="5">5</button>
+            <button class="btn" data-key="6">6</button>
+            <button class="btn" data-key="7">7</button>
+            <button class="btn" data-key="8">8</button>
+            <button class="btn" data-key="9">9</button>
+            <button class="btn special" id="clearBtn">⌫</button>
+            <button class="btn" data-key="0">0</button>
+            <button class="btn enter" id="enterBtn">ВВОД</button>
+        </div>
+        
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Конфигурация
+            const CORRECT_CODE = "2024"; // Правильный код
+            const SUCCESS_URL = "https://chat.deepseek.com/chat"; // Ссылка при успешном вводе
+            const MAX_ATTEMPTS = 5; // Максимальное количество попыток
+            const BASE_DELAY = 5; // Базовая задержка в секундах
+            
+            // Элементы DOM
+            const codeDisplay = document.getElementById('codeDisplay');
+            const dots = codeDisplay.querySelectorAll('.dot');
+            const messageEl = document.getElementById('message');
+            const clearBtn = document.getElementById('clearBtn');
+            const enterBtn = document.getElementById('enterBtn');
+            const keyButtons = document.querySelectorAll('[data-key]');
+            
+            // Состояние
+            let enteredCode = '';
+            let errorCount = 0;
+            let isBlocked = false;
+            
+            // Обновление отображения введенного кода
+            function updateDisplay() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('hidden', index >= enteredCode.length);
+                });
+            }
+            
+            // Добавление цифры
+            function addDigit(digit) {
+                if (isBlocked || enteredCode.length >= 4) return;
+                enteredCode += digit;
+                updateDisplay();
+            }
+            
+            // Очистка ввода
+            function clearInput() {
+                if (isBlocked) return;
+                enteredCode = '';
+                updateDisplay();
+            }
+            
+            // Проверка кода
+            function checkCode() {
+                if (isBlocked || enteredCode.length !== 4) return;
+                
+                if (enteredCode === CORRECT_CODE) {
+                    // Успешный ввод
+                    messageEl.textContent = "✓ Доступ разрешен! Перенаправление...";
+                    messageEl.style.color = "#27ae60";
+                    setTimeout(() => {
+                        window.location.href = SUCCESS_URL;
+                    }, 1000);
+                } else {
+                    // Неверный код
+                    errorCount++;
+                    enteredCode = '';
+                    updateDisplay();
+                    
+                    // Рассчет времени блокировки (макс. 30 секунд)
+                    const delay = Math.min(BASE_DELAY * errorCount, 30);
+                    
+                    messageEl.innerHTML = `❌ Неверный код! Повторите через <span class="timer">${delay}</span> сек.`;
+                    messageEl.style.color = "#e74c3c";
+                    isBlocked = true;
+                    
+                    // Отключение кнопок
+                    keyButtons.forEach(btn => btn.disabled = true);
+                    clearBtn.disabled = true;
+                    enterBtn.disabled = true;
+                    
+                    // Таймер обратного отсчета
+                    let remaining = delay;
+                    const timerInterval = setInterval(() => {
+                        remaining--;
+                        document.querySelector('.timer').textContent = remaining;
+                        
+                        if (remaining <= 0) {
+                            clearInterval(timerInterval);
+                            isBlocked = false;
+                            messageEl.textContent = errorCount >= MAX_ATTEMPTS 
+                                ? "Система заблокирована. Обновите страницу." 
+                                : "Попробуйте снова";
+                            messageEl.style.color = "#333";
+                            
+                            if (errorCount < MAX_ATTEMPTS) {
+                                keyButtons.forEach(btn => btn.disabled = false);
+                                clearBtn.disabled = false;
+                                enterBtn.disabled = false;
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+            
+            // Обработчики событий
+            keyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    addDigit(button.getAttribute('data-key'));
+                });
+            });
+            
+            clearBtn.addEventListener('click', clearInput);
+            enterBtn.addEventListener('click', checkCode);
+            
+            // Поддержка физической клавиатуры
+            document.addEventListener('keydown', (e) => {
+                if (isBlocked) return;
+                
+                if (/^[0-9]$/.test(e.key)) {
+                    addDigit(e.key);
+                } else if (e.key === 'Backspace') {
+                    clearInput();
+                } else if (e.key === 'Enter') {
+                    checkCode();
+                }
+            });
+            
+            // Инициализация отображения
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>
